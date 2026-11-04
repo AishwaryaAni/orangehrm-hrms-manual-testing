@@ -1,0 +1,8 @@
+Req ID,Requirement,No. of TCs,Test Cases,Coverage
+REQ-01,Users authenticate securely; password reset and session timeout work,6,TC-LOGIN-001; TC-LOGIN-002; TC-LOGIN-003; TC-LOGIN-004; TC-LOGIN-005; TC-LOGIN-006,Covered
+REQ-02,"Admin manages system users with unique usernames, roles and status",9,TC-ADM-001; TC-ADM-002; TC-ADM-003; TC-ADM-004; TC-ADM-005; TC-ADM-006; TC-ADM-007; TC-ADM-008; TC-ADM-009,Covered
+REQ-03,"HR adds, searches, edits and deletes employee records",9,TC-PIM-001; TC-PIM-002; TC-PIM-003; TC-PIM-004; TC-PIM-005; TC-PIM-006; TC-PIM-007; TC-PIM-008; TC-PIM-009,Covered
+REQ-04,"Leave entitlement, apply, approve/reject with balance and calendar rules",9,TC-LV-001; TC-LV-002; TC-LV-003; TC-LV-004; TC-LV-005; TC-LV-006; TC-LV-007; TC-LV-008; TC-LV-009,Covered
+REQ-05,"Recruitment: vacancies, candidates and hiring workflow",6,TC-REC-001; TC-REC-002; TC-REC-003; TC-REC-004; TC-REC-005; TC-REC-006,Covered
+REQ-06,Employees maintain own info; role-based access is enforced,3,TC-MYI-001; TC-MYI-002; TC-MYI-003,Covered
+REQ-07,"Dashboard, quick launch and directory give correct navigation and data",4,TC-DSH-001; TC-DSH-002; TC-DSH-003; TC-DSH-004,Covered
