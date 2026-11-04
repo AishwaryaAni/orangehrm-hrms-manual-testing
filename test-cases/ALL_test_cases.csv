@@ -1,0 +1,92 @@
+TC_ID,Module,Scenario,Preconditions,Test Steps,Test Data,Expected Result,Priority,Type,Linked Req,Status
+TC-LOGIN-001,Login & Session,Login with valid admin credentials,On login page,"1. Enter username and password
+2. Click Login",Admin / admin123,Dashboard loads; user dropdown shows logged-in name,P1,Positive,REQ-01,Not Run
+TC-LOGIN-002,Login & Session,Login with invalid password,On login page,"1. Enter Admin / wrong
+2. Login",Admin / wrong123,'Invalid credentials' alert; stays on login,P1,Negative,REQ-01,Not Run
+TC-LOGIN-003,Login & Session,Required field validation,On login page,1. Click Login with empty fields,-,'Required' shown under both fields,P2,Negative,REQ-01,Not Run
+TC-LOGIN-004,Login & Session,Forgot password flow,On login page,"1. Click 'Forgot your password?'
+2. Enter username
+3. Reset Password",Admin,Confirmation that reset link was sent; no user enumeration,P2,Positive,REQ-01,Not Run
+TC-LOGIN-005,Login & Session,Logout and back button,Logged in as Admin,"1. Logout
+2. Press browser Back",-,Login page; protected pages not accessible,P1,Security,REQ-01,Not Run
+TC-LOGIN-006,Login & Session,Session timeout,Logged in as Admin,"1. Stay idle beyond session timeout
+2. Click any menu",-,Redirect to login,P3,Security,REQ-01,Not Run
+TC-ADM-001,Admin User Management,Add system user (ESS role),Logged in as Admin,"1. Admin > User Management > Add
+2. Role ESS, Employee name, Status Enabled, Username, Password, Confirm
+3. Save","Role: ESS, User: aish.test01",'Successfully Saved' toast; user appears in records,P1,Positive,REQ-02,Not Run
+TC-ADM-002,Admin User Management,Duplicate username,User aish.test01 exists,1. Add user with same username,aish.test01,'Already exists' validation,P1,Negative,REQ-02,Not Run
+TC-ADM-003,Admin User Management,Password rules on add user,On Add User,1. Enter short password,abc,Password strength / min length message; Save disabled,P2,Negative,REQ-02,Not Run
+TC-ADM-004,Admin User Management,Password and confirm mismatch,On Add User,1. Enter different passwords,Pass@123 / Pass@124,'Passwords do not match',P2,Negative,REQ-02,Not Run
+TC-ADM-005,Admin User Management,Employee name must be from suggestions,On Add User,"1. Type random employee name not in list
+2. Save",Xyz Abc,'Invalid' validation,P2,Negative,REQ-02,Not Run
+TC-ADM-006,Admin User Management,Search user by username / role / status,Users exist,"1. Enter filters
+2. Search",Role: Admin,Only matching records; record count updated,P2,Positive,REQ-02,Not Run
+TC-ADM-007,Admin User Management,Edit user status to Disabled,User exists,"1. Edit user
+2. Status = Disabled
+3. Save
+4. Try logging in as that user",aish.test01,Disabled user cannot log in,P1,Business Rule,REQ-02,Not Run
+TC-ADM-008,Admin User Management,Delete user,User exists,"1. Delete icon
+2. Confirm",aish.test01,User removed; 'Successfully Deleted',P2,Positive,REQ-02,Not Run
+TC-ADM-009,Admin User Management,Admin cannot delete own logged-in account,Logged in as Admin,1. Try deleting the logged-in Admin user,Admin,Action blocked,P2,Negative,REQ-02,Not Run
+TC-PIM-001,PIM Employee,Add employee with mandatory fields,Logged in as Admin,"1. PIM > Add Employee
+2. First and Last name
+3. Save",Aishwarya Anil,Employee created; Personal Details page opens with auto Employee Id,P1,Positive,REQ-03,Not Run
+TC-PIM-002,PIM Employee,Add employee with login details,Logged in as Admin,"1. Add Employee
+2. Toggle Create Login Details
+3. Fill username/password
+4. Save",aish.emp01 / Test@1234,Employee and linked user created,P1,Positive,REQ-03,Not Run
+TC-PIM-003,PIM Employee,Mandatory name validation,On Add Employee,1. Save with empty First/Last name,-,'Required' errors,P2,Negative,REQ-03,Not Run
+TC-PIM-004,PIM Employee,Duplicate Employee Id,Employee Id 0101 exists,1. Add employee with Id 0101,0101,'Employee Id already exists',P1,Negative,REQ-03,Not Run
+TC-PIM-005,PIM Employee,Profile photo upload type and size,On Add Employee,"1. Upload .pdf, then a >1MB image","file.pdf, 2MB.jpg",Only jpg/png/gif up to 1MB accepted; clear error otherwise,P2,Negative,REQ-03,Not Run
+TC-PIM-006,PIM Employee,Search employee by name and Id,Employees exist,"1. Employee List
+2. Search by name, then by Id",Aishwarya / 0101,Matching record(s) shown,P1,Positive,REQ-03,Not Run
+TC-PIM-007,PIM Employee,Edit personal details,Employee exists,"1. Open employee
+2. Change DOB, nationality
+3. Save",-,Changes saved and shown after reload,P2,Positive,REQ-03,Not Run
+TC-PIM-008,PIM Employee,Delete multiple employees,2+ test employees,"1. Select checkboxes
+2. Delete Selected
+3. Confirm",-,Records removed; count updated,P3,Positive,REQ-03,Not Run
+TC-PIM-009,PIM Employee,Sort employee list,Employees exist,1. Sort by Last Name asc/desc,-,Order correct,P3,Positive,REQ-03,Not Run
+TC-LV-001,Leave,Add leave entitlement,Logged in as Admin,"1. Leave > Entitlements > Add
+2. Employee, Leave Type, Period, Entitlement
+3. Save","Annual, 12 days",Entitlement saved; balance shows 12,P1,Positive,REQ-04,Not Run
+TC-LV-002,Leave,Apply leave within balance,Employee has 12 days balance,"1. Leave > Apply
+2. Type, From/To (2 days)
+3. Apply",2 working days,Leave in Pending Approval; balance shown correctly,P1,Positive,REQ-04,Not Run
+TC-LV-003,Leave,Apply leave exceeding balance,Balance 2 days,1. Apply 5 days,5 days,Blocked with 'Balance not sufficient' message,P1,Business Rule,REQ-04,Not Run
+TC-LV-004,Leave,To date before From date,On Apply,1. From > To,10-Nov to 05-Nov,'To date should be after from date',P2,Negative,REQ-04,Not Run
+TC-LV-005,Leave,Overlapping leave,Leave exists for 10-11 Nov,1. Apply for 11-12 Nov,-,Overlap error; no duplicate request,P2,Negative,REQ-04,Not Run
+TC-LV-006,Leave,Weekend / holiday not counted,Holiday configured,1. Apply Fri-Mon,-,Only working days deducted,P2,Business Rule,REQ-04,Not Run
+TC-LV-007,Leave,Approve leave,Pending request exists,"1. Leave List
+2. Approve",-,Status Scheduled; balance reduced,P1,Positive,REQ-04,Not Run
+TC-LV-008,Leave,Reject / cancel leave restores balance,Pending/Scheduled request,1. Reject or Cancel,-,Status updated; balance restored,P1,Business Rule,REQ-04,Not Run
+TC-LV-009,Leave,Assign leave by admin,Logged in as Admin,"1. Leave > Assign Leave
+2. Fill details
+3. Assign",-,Leave assigned and visible in employee's list,P2,Positive,REQ-04,Not Run
+TC-REC-001,Recruitment,Add vacancy,Logged in as Admin,"1. Recruitment > Vacancies > Add
+2. Name, Job Title, Hiring Manager
+3. Save",QA Engineer - Pune,Vacancy saved and listed,P2,Positive,REQ-05,Not Run
+TC-REC-002,Recruitment,Add candidate with resume,Vacancy exists,"1. Candidates > Add
+2. Name, email, vacancy, resume
+3. Save",resume.pdf,Candidate created with status Application Initiated,P1,Positive,REQ-05,Not Run
+TC-REC-003,Recruitment,Invalid email on candidate,On Add Candidate,1. Enter email 'aish@',aish@,'Expected format: admin@example.com',P2,Negative,REQ-05,Not Run
+TC-REC-004,Recruitment,Resume file type / size,On Add Candidate,1. Upload .exe or >1MB file,file.exe,Rejected with allowed types message,P2,Negative,REQ-05,Not Run
+TC-REC-005,Recruitment,Candidate workflow,Candidate exists,"1. Shortlist
+2. Schedule Interview
+3. Mark Passed
+4. Offer Job
+5. Hire",-,Status moves through each stage; history recorded,P1,State Transition,REQ-05,Not Run
+TC-REC-006,Recruitment,Invalid transition,Candidate is Rejected,1. Try Schedule Interview,-,Option not available for rejected candidate,P3,Negative,REQ-05,Not Run
+TC-MYI-001,My Info & RBAC,ESS user edits own contact details,Logged in as ESS user,"1. My Info > Contact Details
+2. Edit phone
+3. Save",-,Saved successfully,P2,Positive,REQ-06,Not Run
+TC-MYI-002,My Info & RBAC,ESS user cannot access Admin module,Logged in as ESS user,"1. Check menu
+2. Open /admin/viewSystemUsers directly",-,Admin menu hidden; direct URL shows access denied,P1,Security/RBAC,REQ-06,Not Run
+TC-MYI-003,My Info & RBAC,Add attachment in My Info,Logged in,"1. My Info > Attachments > Add
+2. Upload file",doc.pdf,File listed with size and date,P3,Positive,REQ-06,Not Run
+TC-DSH-001,Dashboard & Directory,Dashboard widgets load,Logged in as Admin,1. Open Dashboard,-,"Time at Work, My Actions, Quick Launch, Employees on Leave, distribution charts visible",P2,UI,REQ-07,Not Run
+TC-DSH-002,Dashboard & Directory,Quick Launch navigation,Logged in as Admin,1. Click each Quick Launch icon,-,Correct module page opens,P3,Positive,REQ-07,Not Run
+TC-DSH-003,Dashboard & Directory,Directory search,Logged in as Admin,"1. Directory
+2. Search by name / job title / location",-,Matching employee cards,P3,Positive,REQ-07,Not Run
+TC-DSH-004,Dashboard & Directory,Responsive layout,-,"1. Open app on 375px viewport
+2. Navigate main menu",Mobile viewport,Menu collapses; pages usable,P3,Responsive,REQ-07,Not Run
